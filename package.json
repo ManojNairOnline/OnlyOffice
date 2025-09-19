@@ -1,14 +1,24 @@
 {
   "name": "n8n-nodes-onlyoffice",
   "version": "1.0.0",
-  "description": "n8n node for OnlyOffice integration",
+  "description": "n8n community node for OnlyOffice DocSpace integration - manage files, folders, and documents in your OnlyOffice workspace",
   "keywords": [
-    "n8n-community-node-package"
+    "n8n-community-node-package",
+    "n8n",
+    "onlyoffice",
+    "docspace",
+    "document",
+    "collaboration",
+    "office",
+    "workflow",
+    "automation"
   ],
   "license": "MIT",
   "homepage": "https://manojnair.online/",
   "author": {
-    "name": "@manojnaironline"
+    "name": "Manoj Nair",
+    "email": "manoj@manojnair.online",
+    "url": "https://manojnair.online/"
   },
   "repository": {
     "type": "git",
@@ -19,9 +29,9 @@
     "build": "tsc && gulp build:icons && gulp build:structure",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
-    "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint -s"
+    "lint": "eslint *.ts package.json",
+    "lintfix": "eslint *.ts package.json --fix",
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "dist"
@@ -29,10 +39,10 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/OnlyOfficeApi.credentials.js"
+      "dist/credentials/onlyoffice_credentials.js"
     ],
     "nodes": [
-      "dist/nodes/OnlyOffice/OnlyOffice.node.js"
+      "dist/nodes/OnlyOffice/onlyoffice_node.js"
     ]
   },
   "devDependencies": {

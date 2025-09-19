@@ -350,7 +350,7 @@ export class OnlyOffice implements INodeType {
     switch (operation) {
       case 'list':
         const folderId = context.getNodeParameter('folderId', itemIndex) as string;
-        return await context.helpers.requestWithAuthentication.call(
+        const response = await context.helpers.requestWithAuthentication.call(
           context,
           'onlyOfficeApi',
           {
@@ -358,6 +358,28 @@ export class OnlyOffice implements INodeType {
             url: `${baseUrl}/files/${folderId}`,
           },
         );
+        
+        // Extract the actual data from the API response
+        // OnlyOffice API typically returns data in response.folders and response.files
+        if (response && response.response) {
+          const folders = response.response.folders || [];
+          const files = response.response.files || [];
+          return [...folders, ...files];
+        }
+        
+        // Fallback: if response structure is different, try common alternatives
+        if (response && response.data) {
+          return response.data;
+        }
+        
+        // If response has folders/files directly
+        if (response && (response.folders || response.files)) {
+          const folders = response.folders || [];
+          const files = response.files || [];
+          return [...folders, ...files];
+        }
+        
+        return response;
 
       case 'create':
         const parentFolderId = context.getNodeParameter('parentFolderId', itemIndex) as string;
@@ -430,7 +452,7 @@ export class OnlyOffice implements INodeType {
     switch (operation) {
       case 'list':
         const folderId = context.getNodeParameter('folderId', itemIndex) as string;
-        return await context.helpers.requestWithAuthentication.call(
+        const response = await context.helpers.requestWithAuthentication.call(
           context,
           'onlyOfficeApi',
           {
@@ -438,6 +460,28 @@ export class OnlyOffice implements INodeType {
             url: `${baseUrl}/files/${folderId}`,
           },
         );
+        
+        // Extract the actual data from the API response
+        // OnlyOffice API typically returns data in response.folders and response.files
+        if (response && response.response) {
+          const folders = response.response.folders || [];
+          const files = response.response.files || [];
+          return [...folders, ...files];
+        }
+        
+        // Fallback: if response structure is different, try common alternatives
+        if (response && response.data) {
+          return response.data;
+        }
+        
+        // If response has folders/files directly
+        if (response && (response.folders || response.files)) {
+          const folders = response.folders || [];
+          const files = response.files || [];
+          return [...folders, ...files];
+        }
+        
+        return response;
 
       case 'create':
         const parentFolderId = context.getNodeParameter('parentFolderId', itemIndex) as string;

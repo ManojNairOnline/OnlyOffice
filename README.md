@@ -20,12 +20,26 @@ A comprehensive n8n node for integrating with OnlyOffice Document Server, provid
 
 ## Installation
 
+### Self-Hosted n8n
+
 1. Install the package in your n8n instance:
    ```bash
    npm install n8n-nodes-onlyoffice
    ```
 
 2. Restart your n8n instance to load the new node.
+
+### n8n Cloud
+
+⚠️ **Important**: This community node is currently **not verified** for n8n Cloud. n8n Cloud only supports verified community nodes for security and stability reasons.
+
+**Options for n8n Cloud users:**
+
+1. **Request Verification**: Contact n8n support to request verification of this node for cloud use
+2. **Self-Host**: Consider using a self-hosted n8n instance which supports all community nodes
+3. **Alternative**: Use built-in HTTP Request nodes to interact with the OnlyOffice API directly
+
+**Why the limitation?** n8n Cloud maintains a curated list of verified community nodes to ensure security, performance, and reliability for all cloud users. While this node works perfectly in self-hosted environments, it requires verification before being available in n8n Cloud.
 
 ## Configuration
 

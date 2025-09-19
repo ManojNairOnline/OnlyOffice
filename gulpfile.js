@@ -1,16 +1,14 @@
 const { src, dest } = require('gulp');
 
 function buildIcons() {
-  return src('*.svg')
+  return src('nodes/**/*.svg')
     .pipe(dest('dist/icons'))
     .pipe(dest('dist/nodes/OnlyOffice'));
 }
 
 function buildStructure() {
-  return src('dist/onlyoffice_credentials.js')
-    .pipe(dest('dist/credentials'))
-    .pipe(src('dist/onlyoffice_node.js'))
-    .pipe(dest('dist/nodes/OnlyOffice'));
+  // Files are already compiled to the correct structure
+  return Promise.resolve();
 }
 
 exports['build:icons'] = buildIcons;

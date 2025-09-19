@@ -39,10 +39,10 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/onlyoffice_credentials.js"
+      "dist/credentials/OnlyOfficeApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/OnlyOffice/onlyoffice_node.js"
+      "dist/nodes/OnlyOffice/OnlyOffice.node.js"
     ]
   },
   "devDependencies": {

@@ -22,7 +22,8 @@
     "resolveJsonModule": true
   },
   "include": [
-    "*.ts"
+    "credentials/**/*.ts",
+    "nodes/**/*.ts"
   ],
   "exclude": [
     "node_modules",

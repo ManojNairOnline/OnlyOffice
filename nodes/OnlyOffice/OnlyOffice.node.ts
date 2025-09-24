@@ -359,6 +359,17 @@ export class OnlyOffice implements INodeType {
           },
         );
         
+        // Debug: Log the response to understand its structure
+        console.log('OnlyOffice API Response Type:', typeof response);
+        console.log('OnlyOffice API Response:', JSON.stringify(response, null, 2));
+        
+        // Also return debug info in the response for immediate visibility
+        const debugInfo = {
+          responseType: typeof response,
+          responseLength: response ? (typeof response === 'string' ? response.length : Object.keys(response).length) : 'null',
+          responsePreview: response ? (typeof response === 'string' ? response.substring(0, 200) : JSON.stringify(response).substring(0, 200)) : 'null'
+        };
+        
         // Extract the actual data from the API response
         // OnlyOffice API typically returns data in response.folders and response.files
         if (response && response.response) {
@@ -379,7 +390,88 @@ export class OnlyOffice implements INodeType {
           return [...folders, ...files];
         }
         
-        return response;
+        // Handle case where response might be a string or unexpected format
+        if (typeof response === 'string') {
+          try {
+            const parsedResponse = JSON.parse(response);
+            if (parsedResponse && parsedResponse.response) {
+              const folders = parsedResponse.response.folders || [];
+              const files = parsedResponse.response.files || [];
+              return [...folders, ...files];
+            }
+            if (parsedResponse && (parsedResponse.folders || parsedResponse.files)) {
+              const folders = parsedResponse.folders || [];
+              const files = parsedResponse.files || [];
+              return [...folders, ...files];
+            }
+            return parsedResponse;
+          } catch (e) {
+            // If parsing fails, return the string as is
+            return { error: 'Failed to parse response', rawResponse: response };
+          }
+        }
+        
+        // If response is an array, handle it properly
+        if (Array.isArray(response)) {
+          // Check if the first element is a JSON string
+          if (response.length > 0 && typeof response[0] === 'string') {
+            try {
+              const parsedResponse = JSON.parse(response[0]);
+              // Extract files and folders from the parsed response
+              let extractedData = [];
+              
+              if (parsedResponse && parsedResponse.response) {
+                const files = parsedResponse.response.files || [];
+                const folders = parsedResponse.response.folders || [];
+                extractedData = [...folders, ...files];
+              } else if (parsedResponse && parsedResponse.files && parsedResponse.folders) {
+                const files = parsedResponse.files || [];
+                const folders = parsedResponse.folders || [];
+                extractedData = [...folders, ...files];
+              } else {
+                extractedData = [parsedResponse];
+              }
+              
+              return extractedData;
+            } catch (e) {
+              return [{ error: 'Failed to parse JSON response', rawResponse: response }];
+            }
+          } else {
+            // If it's not a JSON string, return the array as is
+            return response;
+          }
+        }
+        
+        // Parse the response correctly for OnlyOffice API
+        let parsedResponse;
+        
+        // If response is a string, parse it as JSON
+        if (typeof response === 'string') {
+          try {
+            parsedResponse = JSON.parse(response);
+          } catch (e) {
+            return [{ error: 'Failed to parse JSON response', rawResponse: response }];
+          }
+        } else {
+          parsedResponse = response;
+        }
+        
+        // Extract files and folders from the parsed response
+        let extractedData = [];
+        
+        if (parsedResponse && parsedResponse.response) {
+          const files = parsedResponse.response.files || [];
+          const folders = parsedResponse.response.folders || [];
+          extractedData = [...folders, ...files];
+        } else if (parsedResponse && parsedResponse.files && parsedResponse.folders) {
+          const files = parsedResponse.files || [];
+          const folders = parsedResponse.folders || [];
+          extractedData = [...folders, ...files];
+        } else {
+          extractedData = [parsedResponse];
+        }
+        
+        return extractedData;
 
       case 'create':
         const parentFolderId = context.getNodeParameter('parentFolderId', itemIndex) as string;
@@ -461,6 +553,17 @@ export class OnlyOffice implements INodeType {
           },
         );
         
+        // Debug: Log the response to understand its structure
+        console.log('OnlyOffice API Response Type:', typeof response);
+        console.log('OnlyOffice API Response:', JSON.stringify(response, null, 2));
+        
+        // Also return debug info in the response for immediate visibility
+        const debugInfo = {
+          responseType: typeof response,
+          responseLength: response ? (typeof response === 'string' ? response.length : Object.keys(response).length) : 'null',
+          responsePreview: response ? (typeof response === 'string' ? response.substring(0, 200) : JSON.stringify(response).substring(0, 200)) : 'null'
+        };
+        
         // Extract the actual data from the API response
         // OnlyOffice API typically returns data in response.folders and response.files
         if (response && response.response) {
@@ -481,7 +584,88 @@ export class OnlyOffice implements INodeType {
           return [...folders, ...files];
         }
         
-        return response;
+        // Handle case where response might be a string or unexpected format
+        if (typeof response === 'string') {
+          try {
+            const parsedResponse = JSON.parse(response);
+            if (parsedResponse && parsedResponse.response) {
+              const folders = parsedResponse.response.folders || [];
+              const files = parsedResponse.response.files || [];
+              return [...folders, ...files];
+            }
+            if (parsedResponse && (parsedResponse.folders || parsedResponse.files)) {
+              const folders = parsedResponse.folders || [];
+              const files = parsedResponse.files || [];
+              return [...folders, ...files];
+            }
+            return parsedResponse;
+          } catch (e) {
+            // If parsing fails, return the string as is
+            return { error: 'Failed to parse response', rawResponse: response };
+          }
+        }
+        
+        // If response is an array, handle it properly
+        if (Array.isArray(response)) {
+          // Check if the first element is a JSON string
+          if (response.length > 0 && typeof response[0] === 'string') {
+            try {
+              const parsedResponse = JSON.parse(response[0]);
+              // Extract files and folders from the parsed response
+              let extractedData = [];
+              
+              if (parsedResponse && parsedResponse.response) {
+                const files = parsedResponse.response.files || [];
+                const folders = parsedResponse.response.folders || [];
+                extractedData = [...folders, ...files];
+              } else if (parsedResponse && parsedResponse.files && parsedResponse.folders) {
+                const files = parsedResponse.files || [];
+                const folders = parsedResponse.folders || [];
+                extractedData = [...folders, ...files];
+              } else {
+                extractedData = [parsedResponse];
+              }
+              
+              return extractedData;
+            } catch (e) {
+              return [{ error: 'Failed to parse JSON response', rawResponse: response }];
+            }
+          } else {
+            // If it's not a JSON string, return the array as is
+            return response;
+          }
+        }
+        
+        // Parse the response correctly for OnlyOffice API
+        let parsedResponse;
+        
+        // If response is a string, parse it as JSON
+        if (typeof response === 'string') {
+          try {
+            parsedResponse = JSON.parse(response);
+          } catch (e) {
+            return [{ error: 'Failed to parse JSON response', rawResponse: response }];
+          }
+        } else {
+          parsedResponse = response;
+        }
+        
+        // Extract files and folders from the parsed response
+        let extractedData = [];
+        
+        if (parsedResponse && parsedResponse.response) {
+          const files = parsedResponse.response.files || [];
+          const folders = parsedResponse.response.folders || [];
+          extractedData = [...folders, ...files];
+        } else if (parsedResponse && parsedResponse.files && parsedResponse.folders) {
+          const files = parsedResponse.files || [];
+          const folders = parsedResponse.folders || [];
+          extractedData = [...folders, ...files];
+        } else {
+          extractedData = [parsedResponse];
+        }
+        
+        return extractedData;
 
       case 'create':
         const parentFolderId = context.getNodeParameter('parentFolderId', itemIndex) as string;
